@@ -130,3 +130,4 @@ D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\refint
 D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\AngNetEcommerce.API.pdb
 D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\AngNetEcommerce.API.genruntimeconfig.cache
 D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\ref\AngNetEcommerce.API.dll
+D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\AngNetEcommerce.API.sourcelink.json
