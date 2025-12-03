@@ -62,4 +62,12 @@ app.UseAuthorization();
 
 app.MapControllers();
 
+// Seed Database
+using (var scope = app.Services.CreateScope())
+{
+    var services = scope.ServiceProvider;
+    var context = services.GetRequiredService<AppDbContext>();
+    DbInitializer.Initialize(context);
+}
+
 app.Run();

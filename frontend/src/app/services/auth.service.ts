@@ -1,15 +1,21 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, BehaviorSubject } from 'rxjs';
 import { tap } from 'rxjs/operators';
 
 @Injectable({
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth'; // Adjust port if needed
+  private apiUrl = 'http://localhost:5000/api/auth';
+  private currentUserSubject: BehaviorSubject<any>;
+  public currentUser$: Observable<any>;
 
-  constructor(private http: HttpClient) { }
+  constructor(private http: HttpClient) {
+    const storedUser = localStorage.getItem('user');
+    this.currentUserSubject = new BehaviorSubject<any>(storedUser ? JSON.parse(storedUser) : null);
+    this.currentUser$ = this.currentUserSubject.asObservable();
+  }
 
   signup(user: any): Observable<any> {
     return this.http.post(`${this.apiUrl}/signup`, user);
@@ -21,6 +27,7 @@ export class AuthService {
         if (response.token) {
           localStorage.setItem('token', response.token);
           localStorage.setItem('user', JSON.stringify(response.user));
+          this.currentUserSubject.next(response.user);
         }
       })
     );
@@ -29,14 +36,14 @@ export class AuthService {
   logout(): void {
     localStorage.removeItem('token');
     localStorage.removeItem('user');
+    this.currentUserSubject.next(null);
   }
 
   isLoggedIn(): boolean {
-    return !!localStorage.getItem('token');
+    return !!this.currentUserSubject.value;
   }
 
   getUser(): any {
-    const user = localStorage.getItem('user');
-    return user ? JSON.parse(user) : null;
+    return this.currentUserSubject.value;
   }
 }
