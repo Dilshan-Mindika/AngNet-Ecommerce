@@ -7,7 +7,7 @@ import { tap } from 'rxjs/operators';
   providedIn: 'root'
 })
 export class AuthService {
-  private apiUrl = 'http://localhost:5000/api/auth';
+  private apiUrl = 'http://localhost:5065/api/auth';
   private currentUserSubject: BehaviorSubject<any>;
   public currentUser$: Observable<any>;
 

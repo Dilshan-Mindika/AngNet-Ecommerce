@@ -138,7 +138,7 @@ export class AdminComponent implements OnInit {
     imageUrl: ''
   };
 
-  private apiUrl = 'http://localhost:5000/api/products';
+  private apiUrl = 'http://localhost:5065/api/products';
 
   constructor(
     private productService: ProductService,
