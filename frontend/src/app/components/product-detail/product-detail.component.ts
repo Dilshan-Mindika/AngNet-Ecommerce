@@ -15,7 +15,7 @@ import { ToastrService } from 'ngx-toastr';
         <!-- Image Gallery -->
         <div class="col-md-6 mb-4">
           <div class="border rounded p-3 text-center">
-            <img [src]="product.imageUrl || 'https://via.placeholder.com/500'" class="img-fluid" style="max-height: 500px;" alt="{{ product.name }}">
+            <img [src]="product.imageUrl || 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2069&auto=format&fit=crop'" class="img-fluid" style="max-height: 500px;" alt="{{ product.name }}">
           </div>
         </div>
 

@@ -17,7 +17,7 @@ import { RouterModule } from '@angular/router';
             <a routerLink="/products" class="btn btn-light btn-lg rounded-pill px-4 fw-bold text-primary">Shop Now</a>
           </div>
           <div class="col-md-6 text-center d-none d-md-block">
-            <img src="https://via.placeholder.com/500x300" alt="Hero Image" class="img-fluid rounded shadow-lg">
+            <img src="https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?q=80&w=2070&auto=format&fit=crop" alt="Hero Image" class="img-fluid rounded shadow-lg">
           </div>
         </div>
       </div>
@@ -28,32 +28,32 @@ import { RouterModule } from '@angular/router';
       <h2 class="fw-bold mb-4">Featured Categories</h2>
       <div class="row mb-5">
         <div class="col-md-4 mb-4">
-          <div class="card h-100 border-0 shadow-sm category-card">
-            <div class="card-body text-center p-4">
-              <i class="fa fa-laptop fa-4x text-primary mb-3"></i>
+          <div class="card h-100 border-0 shadow-sm category-card" style="background: url('https://images.unsplash.com/photo-1498049860654-af1a5c5668ba?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;">
+            <div class="card-body text-center p-5 text-white" style="background: rgba(0,0,0,0.5);">
+              <i class="fa fa-laptop fa-4x mb-3"></i>
               <h4 class="card-title fw-bold">Electronics</h4>
-              <p class="card-text text-muted">Latest gadgets and accessories.</p>
-              <a routerLink="/products" [queryParams]="{category: 'Electronics'}" class="btn btn-outline-primary rounded-pill">Explore</a>
+              <p class="card-text">Latest gadgets and accessories.</p>
+              <a routerLink="/products" [queryParams]="{category: 'Electronics'}" class="btn btn-light rounded-pill fw-bold">Explore</a>
             </div>
           </div>
         </div>
         <div class="col-md-4 mb-4">
-          <div class="card h-100 border-0 shadow-sm category-card">
-            <div class="card-body text-center p-4">
-              <i class="fa fa-shopping-bag fa-4x text-danger mb-3"></i>
+          <div class="card h-100 border-0 shadow-sm category-card" style="background: url('https://images.unsplash.com/photo-1445205170230-053b83016050?q=80&w=2071&auto=format&fit=crop') center/cover no-repeat;">
+            <div class="card-body text-center p-5 text-white" style="background: rgba(0,0,0,0.5);">
+              <i class="fa fa-shopping-bag fa-4x mb-3"></i>
               <h4 class="card-title fw-bold">Clothing</h4>
-              <p class="card-text text-muted">Trendy fashion for everyone.</p>
-              <a routerLink="/products" [queryParams]="{category: 'Clothing'}" class="btn btn-outline-danger rounded-pill">Explore</a>
+              <p class="card-text">Trendy fashion for everyone.</p>
+              <a routerLink="/products" [queryParams]="{category: 'Clothing'}" class="btn btn-light rounded-pill fw-bold">Explore</a>
             </div>
           </div>
         </div>
         <div class="col-md-4 mb-4">
-          <div class="card h-100 border-0 shadow-sm category-card">
-            <div class="card-body text-center p-4">
-              <i class="fa fa-book fa-4x text-success mb-3"></i>
+          <div class="card h-100 border-0 shadow-sm category-card" style="background: url('https://images.unsplash.com/photo-1495446815901-a7297e633e8d?q=80&w=2070&auto=format&fit=crop') center/cover no-repeat;">
+            <div class="card-body text-center p-5 text-white" style="background: rgba(0,0,0,0.5);">
+              <i class="fa fa-book fa-4x mb-3"></i>
               <h4 class="card-title fw-bold">Books</h4>
-              <p class="card-text text-muted">Bestsellers and classics.</p>
-              <a routerLink="/products" [queryParams]="{category: 'Books'}" class="btn btn-outline-success rounded-pill">Explore</a>
+              <p class="card-text">Bestsellers and classics.</p>
+              <a routerLink="/products" [queryParams]="{category: 'Books'}" class="btn btn-light rounded-pill fw-bold">Explore</a>
             </div>
           </div>
         </div>

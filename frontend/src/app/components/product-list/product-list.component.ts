@@ -42,7 +42,7 @@ import { ToastrService } from 'ngx-toastr';
               <div class="card h-100 border-0 shadow-sm product-card">
                 <a [routerLink]="['/products', product.id]" class="text-decoration-none text-dark">
                   <div class="position-relative" style="height: 200px; overflow: hidden;">
-                    <img [src]="product.imageUrl || 'https://via.placeholder.com/200'" class="card-img-top h-100 w-100" style="object-fit: contain;" alt="{{ product.name }}">
+                    <img [src]="product.imageUrl || 'https://images.unsplash.com/photo-1557821552-17105176677c?q=80&w=2069&auto=format&fit=crop'" class="card-img-top h-100 w-100" style="object-fit: contain;" alt="{{ product.name }}">
                   </div>
                   <div class="card-body p-2">
                     <h6 class="card-title text-truncate mb-1 hover-underline">{{ product.name }}</h6>
