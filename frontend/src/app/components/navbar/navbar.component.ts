@@ -54,8 +54,10 @@ import { AuthService } from '../../services/auth.service';
                   Hi, {{ userName }}
                 </a>
                 <ul class="dropdown-menu dropdown-menu-end">
-                  <li><a class="dropdown-item" routerLink="/admin" *ngIf="isAdmin">Admin Panel</a></li>
-                  <li><a class="dropdown-item" href="#">My Orders</a></li>
+                  <li><a class="dropdown-item" routerLink="/dashboard/admin" *ngIf="isAdmin">Admin Dashboard</a></li>
+                  <li><a class="dropdown-item" routerLink="/dashboard/seller" *ngIf="isSeller">Seller Dashboard</a></li>
+                  <li><a class="dropdown-item" routerLink="/dashboard/user" *ngIf="isUser">My Dashboard</a></li>
+                  <li><a class="dropdown-item" routerLink="/dashboard/user">My Orders</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer">Sign out</a></li>
                 </ul>
@@ -75,6 +77,8 @@ import { AuthService } from '../../services/auth.service';
 export class NavbarComponent implements OnInit {
   isLoggedIn = false;
   isAdmin = false;
+  isSeller = false;
+  isUser = false;
   userName = '';
   cartCount = 0;
   searchTerm = '';
@@ -87,6 +91,8 @@ export class NavbarComponent implements OnInit {
       this.isLoggedIn = !!user;
       this.userName = user?.fullName || 'User';
       this.isAdmin = user?.role === 'Admin';
+      this.isSeller = user?.role === 'Seller';
+      this.isUser = user?.role === 'Customer';
     });
   }
 

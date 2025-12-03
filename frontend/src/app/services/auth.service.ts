@@ -46,4 +46,19 @@ export class AuthService {
   getUser(): any {
     return this.currentUserSubject.value;
   }
+
+  isAdmin(): boolean {
+    const user = this.getUser();
+    return user && user.role === 'Admin';
+  }
+
+  isSeller(): boolean {
+    const user = this.getUser();
+    return user && user.role === 'Seller';
+  }
+
+  isUser(): boolean {
+    const user = this.getUser();
+    return user && user.role === 'Customer';
+  }
 }

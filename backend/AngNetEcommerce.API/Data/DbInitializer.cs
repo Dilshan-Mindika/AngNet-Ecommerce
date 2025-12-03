@@ -17,7 +17,8 @@ namespace AngNetEcommerce.API.Data
             var users = new User[]
             {
                 new User { FullName = "Admin User", Email = "admin@example.com", PasswordHash = "admin123", Role = "Admin", CreatedAt = DateTime.UtcNow },
-                new User { FullName = "John Doe", Email = "john@example.com", PasswordHash = "user123", Role = "User", CreatedAt = DateTime.UtcNow }
+                new User { FullName = "John Doe", Email = "john@example.com", PasswordHash = "user123", Role = "Customer", CreatedAt = DateTime.UtcNow },
+                new User { FullName = "Jane Seller", Email = "seller@example.com", PasswordHash = "seller123", Role = "Seller", CreatedAt = DateTime.UtcNow }
             };
 
             foreach (var u in users)
