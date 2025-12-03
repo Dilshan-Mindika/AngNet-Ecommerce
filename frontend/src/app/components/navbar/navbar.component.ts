@@ -32,6 +32,9 @@ import { AuthService } from '../../services/auth.service';
           </form>
           <ul class="navbar-nav ms-auto mb-2 mb-lg-0 align-items-center">
             <li class="nav-item">
+              <a class="nav-link" routerLink="/products">Shop</a>
+            </li>
+            <li class="nav-item">
               <a class="nav-link" routerLink="/cart">
                 <i class="fa fa-shopping-cart fa-lg"></i>
                 <span class="badge bg-danger rounded-pill ms-1" *ngIf="cartCount > 0">{{ cartCount }}</span>
