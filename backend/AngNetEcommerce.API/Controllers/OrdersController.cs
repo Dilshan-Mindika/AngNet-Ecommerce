@@ -71,5 +71,33 @@ namespace AngNetEcommerce.API.Controllers
 
             return CreatedAtAction("GetOrders", new { id = order.Id }, order);
         }
+
+        [HttpGet("admin")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetAllOrders()
+        {
+            return await _context.Orders
+                .Include(o => o.OrderItems)
+                .ThenInclude(oi => oi.Product)
+                .Include(o => o.User)
+                .OrderByDescending(o => o.OrderDate)
+                .ToListAsync();
+        }
+
+        [HttpPut("{id}/status")]
+        [Authorize(Roles = "Admin")]
+        public async Task<IActionResult> UpdateOrderStatus(int id, [FromBody] string status)
+        {
+            var order = await _context.Orders.FindAsync(id);
+            if (order == null)
+            {
+                return NotFound();
+            }
+
+            order.OrderStatus = status;
+            await _context.SaveChangesAsync();
+
+            return NoContent();
+        }
     }
 }

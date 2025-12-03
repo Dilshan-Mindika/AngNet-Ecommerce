@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { OrderService } from '../../services/order.service';
 
 @Component({
   selector: 'app-checkout',
@@ -28,13 +29,11 @@ import { HttpClient } from '@angular/common/http';
 })
 export class CheckoutComponent {
   shippingAddress = '';
-  private apiUrl = 'http://localhost:5000/api/orders';
 
-  constructor(private http: HttpClient, private router: Router) { }
+  constructor(private orderService: OrderService, private router: Router) { }
 
   placeOrder(): void {
-    const orderDto = { shippingAddress: this.shippingAddress };
-    this.http.post(this.apiUrl, orderDto).subscribe({
+    this.orderService.placeOrder(this.shippingAddress).subscribe({
       next: () => {
         alert('Order placed successfully!');
         this.router.navigate(['/']);
