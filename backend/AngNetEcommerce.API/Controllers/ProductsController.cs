@@ -18,9 +18,35 @@ namespace AngNetEcommerce.API.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult<IEnumerable<Product>>> GetProducts()
+        public async Task<ActionResult<IEnumerable<Product>>> GetProducts(
+            [FromQuery] string? search,
+            [FromQuery] string? category,
+            [FromQuery] decimal? minPrice,
+            [FromQuery] decimal? maxPrice)
         {
-            return await _context.Products.ToListAsync();
+            var query = _context.Products.AsQueryable();
+
+            if (!string.IsNullOrEmpty(search))
+            {
+                query = query.Where(p => p.Name.Contains(search) || p.Description.Contains(search));
+            }
+
+            if (!string.IsNullOrEmpty(category))
+            {
+                query = query.Where(p => p.Category == category);
+            }
+
+            if (minPrice.HasValue)
+            {
+                query = query.Where(p => p.Price >= minPrice.Value);
+            }
+
+            if (maxPrice.HasValue)
+            {
+                query = query.Where(p => p.Price <= maxPrice.Value);
+            }
+
+            return await query.ToListAsync();
         }
 
         [HttpGet("{id}")]

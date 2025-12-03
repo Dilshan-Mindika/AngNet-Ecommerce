@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { FormsModule } from '@angular/forms';
 import { RouterModule } from '@angular/router';
 import { ProductService, Product } from '../../services/product.service';
 import { CartService } from '../../services/cart.service';
@@ -8,9 +9,32 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-product-list',
   standalone: true,
-  imports: [CommonModule, RouterModule],
+  imports: [CommonModule, RouterModule, FormsModule],
   template: `
     <div class="container mt-4">
+      <div class="row mb-4">
+        <div class="col-md-3">
+          <input type="text" class="form-control" placeholder="Search products..." [(ngModel)]="filters.search" (keyup.enter)="applyFilters()">
+        </div>
+        <div class="col-md-3">
+          <select class="form-select" [(ngModel)]="filters.category" (change)="applyFilters()">
+            <option value="">All Categories</option>
+            <option value="Electronics">Electronics</option>
+            <option value="Clothing">Clothing</option>
+            <option value="Books">Books</option>
+          </select>
+        </div>
+        <div class="col-md-2">
+          <input type="number" class="form-control" placeholder="Min Price" [(ngModel)]="filters.minPrice" (change)="applyFilters()">
+        </div>
+        <div class="col-md-2">
+          <input type="number" class="form-control" placeholder="Max Price" [(ngModel)]="filters.maxPrice" (change)="applyFilters()">
+        </div>
+        <div class="col-md-2">
+          <button class="btn btn-primary w-100" (click)="applyFilters()">Filter</button>
+        </div>
+      </div>
+
       <div class="row">
         <div class="col-md-3" *ngFor="let product of products">
           <div class="card mb-4 shadow-sm">
@@ -35,6 +59,12 @@ import { ToastrService } from 'ngx-toastr';
 })
 export class ProductListComponent implements OnInit {
   products: Product[] = [];
+  filters: any = {
+    search: '',
+    category: '',
+    minPrice: null,
+    maxPrice: null
+  };
 
   constructor(
     private productService: ProductService,
@@ -43,9 +73,24 @@ export class ProductListComponent implements OnInit {
   ) { }
 
   ngOnInit(): void {
-    this.productService.getProducts().subscribe(data => {
+    this.loadProducts();
+  }
+
+  loadProducts(): void {
+    // Remove null/empty filters
+    const params: any = {};
+    if (this.filters.search) params.search = this.filters.search;
+    if (this.filters.category) params.category = this.filters.category;
+    if (this.filters.minPrice) params.minPrice = this.filters.minPrice;
+    if (this.filters.maxPrice) params.maxPrice = this.filters.maxPrice;
+
+    this.productService.getProducts(params).subscribe(data => {
       this.products = data;
     });
+  }
+
+  applyFilters(): void {
+    this.loadProducts();
   }
 
   addToCart(product: Product): void {

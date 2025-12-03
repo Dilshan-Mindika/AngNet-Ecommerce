@@ -20,8 +20,8 @@ export class ProductService {
 
   constructor(private http: HttpClient) { }
 
-  getProducts(): Observable<Product[]> {
-    return this.http.get<Product[]>(this.apiUrl);
+  getProducts(params?: any): Observable<Product[]> {
+    return this.http.get<Product[]>(this.apiUrl, { params });
   }
 
   getProduct(id: number): Observable<Product> {

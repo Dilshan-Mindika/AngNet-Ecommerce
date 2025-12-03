@@ -5,6 +5,7 @@ import { CartComponent } from './components/cart/cart.component';
 import { CheckoutComponent } from './components/checkout/checkout.component';
 import { LoginComponent } from './components/login/login.component';
 import { SignupComponent } from './components/signup/signup.component';
+import { AdminComponent } from './components/admin/admin.component';
 
 export const routes: Routes = [
     { path: '', component: ProductListComponent },
@@ -13,5 +14,6 @@ export const routes: Routes = [
     { path: 'checkout', component: CheckoutComponent },
     { path: 'login', component: LoginComponent },
     { path: 'signup', component: SignupComponent },
+    { path: 'admin', component: AdminComponent },
     { path: '**', redirectTo: '' }
 ];
