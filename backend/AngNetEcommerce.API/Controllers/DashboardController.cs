@@ -37,6 +37,41 @@ namespace AngNetEcommerce.API.Controllers
             };
         }
 
+        [HttpGet("charts")]
+        [Authorize(Roles = "Admin,Seller")]
+        public async Task<ActionResult<object>> GetChartData()
+        {
+            // Monthly Sales (Last 6 Months)
+            var sixMonthsAgo = DateTime.Now.AddMonths(-5);
+            var salesData = await _context.Orders
+                .Where(o => o.OrderDate >= sixMonthsAgo)
+                .GroupBy(o => new { o.OrderDate.Year, o.OrderDate.Month })
+                .Select(g => new
+                {
+                    Year = g.Key.Year,
+                    Month = g.Key.Month,
+                    TotalSales = g.Sum(o => o.TotalPrice)
+                })
+                .OrderBy(x => x.Year).ThenBy(x => x.Month)
+                .ToListAsync();
+
+            // Order Status Distribution
+            var statusData = await _context.Orders
+                .GroupBy(o => o.OrderStatus)
+                .Select(g => new
+                {
+                    Status = g.Key,
+                    Count = g.Count()
+                })
+                .ToListAsync();
+
+            return new
+            {
+                Sales = salesData,
+                StatusDistribution = statusData
+            };
+        }
+
         [HttpGet("user-stats")]
         [Authorize]
         public async Task<ActionResult<object>> GetUserStats()

@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("AngNetEcommerce.API")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e1996a7eb66f668b466091480bca3977d285844d")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+341387d0762f74039b03475ccdcd212821b5985f")]
 [assembly: System.Reflection.AssemblyProductAttribute("AngNetEcommerce.API")]
 [assembly: System.Reflection.AssemblyTitleAttribute("AngNetEcommerce.API")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

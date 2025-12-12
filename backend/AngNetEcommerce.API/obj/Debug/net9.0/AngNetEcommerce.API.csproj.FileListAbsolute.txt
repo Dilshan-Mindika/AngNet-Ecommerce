@@ -131,3 +131,4 @@ D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\AngNet
 D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\AngNetEcommerce.API.genruntimeconfig.cache
 D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\ref\AngNetEcommerce.API.dll
 D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\obj\Debug\net9.0\AngNetEcommerce.API.sourcelink.json
+D:\Projects\AngNet Ecommerce\backend\AngNetEcommerce.API\bin\Debug\net9.0\BCrypt.Net-Next.dll

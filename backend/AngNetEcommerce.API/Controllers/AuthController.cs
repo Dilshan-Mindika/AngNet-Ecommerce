@@ -31,17 +31,13 @@ namespace AngNetEcommerce.API.Controllers
                 return BadRequest("Email already exists.");
             }
 
-            // In a real app, hash the password!
-            // For this demo, we'll store it plain text (NOT RECOMMENDED FOR PRODUCTION)
-            // Or better, let's do a simple BCrypt hash if we had the package, but for now let's just pretend or use a simple hash.
-            // Actually, let's use BCrypt.Net-Next if possible, but I don't want to add more packages right now if not requested.
-            // I'll stick to simple storage for the prototype but add a TODO.
+            var passwordHash = BCrypt.Net.BCrypt.HashPassword(userDto.Password);
             
             var user = new User
             {
                 FullName = userDto.FullName,
                 Email = userDto.Email,
-                PasswordHash = userDto.Password, // TODO: Hash this!
+                PasswordHash = passwordHash,
                 Address = userDto.Address,
                 PhoneNumber = userDto.PhoneNumber,
                 Role = "Customer"
@@ -56,9 +52,9 @@ namespace AngNetEcommerce.API.Controllers
         [HttpPost("login")]
         public async Task<IActionResult> Login([FromBody] LoginDto loginDto)
         {
-            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email && u.PasswordHash == loginDto.Password);
+            var user = await _context.Users.FirstOrDefaultAsync(u => u.Email == loginDto.Email);
 
-            if (user == null)
+            if (user == null || !BCrypt.Net.BCrypt.Verify(loginDto.Password, user.PasswordHash))
             {
                 return Unauthorized("Invalid email or password.");
             }

@@ -8,24 +8,36 @@ namespace AngNetEcommerce.API.Data
         {
             context.Database.EnsureCreated();
 
-            // Look for any products.
-            if (context.Products.Any())
-            {
-                return;   // DB has been seeded
-            }
+            context.Database.EnsureCreated();
 
+            // Seed Users (Upsert)
             var users = new User[]
             {
-                new User { FullName = "Admin User", Email = "admin@example.com", PasswordHash = "admin123", Role = "Admin", CreatedAt = DateTime.UtcNow },
-                new User { FullName = "John Doe", Email = "john@example.com", PasswordHash = "user123", Role = "Customer", CreatedAt = DateTime.UtcNow },
-                new User { FullName = "Jane Seller", Email = "seller@example.com", PasswordHash = "seller123", Role = "Seller", CreatedAt = DateTime.UtcNow }
+                new User { FullName = "Admin User", Email = "admin@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("admin123"), Role = "Admin", CreatedAt = DateTime.UtcNow },
+                new User { FullName = "John Doe", Email = "john@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("user123"), Role = "Customer", CreatedAt = DateTime.UtcNow },
+                new User { FullName = "Jane Seller", Email = "seller@example.com", PasswordHash = BCrypt.Net.BCrypt.HashPassword("seller123"), Role = "Seller", CreatedAt = DateTime.UtcNow }
             };
 
             foreach (var u in users)
             {
-                context.Users.Add(u);
+                var existingUser = context.Users.FirstOrDefault(x => x.Email == u.Email);
+                if (existingUser == null)
+                {
+                    context.Users.Add(u);
+                }
+                else
+                {
+                    // Update password for existing demo users to ensure they are hashed
+                    existingUser.PasswordHash = u.PasswordHash;
+                }
             }
             context.SaveChanges();
+
+            // Look for any products.
+            if (context.Products.Any())
+            {
+                return;   // Products have been seeded
+            }
 
             var products = new Product[]
             {
