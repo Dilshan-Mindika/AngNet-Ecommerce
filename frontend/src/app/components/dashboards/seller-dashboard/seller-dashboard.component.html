@@ -1,77 +1,82 @@
-<div class="container mx-auto px-4 py-8">
-    <div class="mb-8">
-        <h1 class="text-3xl font-bold mb-2">Seller Dashboard</h1>
-        <p class="text-gray-600">Overview of store performance and orders.</p>
-        <div class="mt-4">
-            <a routerLink="/products" class="text-blue-600 hover:text-blue-800 font-semibold mr-4">Manage Products</a>
-            <!-- Add more management links here later -->
+<div class="container py-5">
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <div>
+            <h1 class="fw-bold mb-1">Seller Dashboard</h1>
+            <p class="text-muted mb-0">Manage your products and orders.</p>
+        </div>
+        <a routerLink="/products" class="btn btn-primary"><i class="fa fa-plus me-2"></i>Add Product</a>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-primary">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">My Products</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.totalProducts || 0 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-success">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Total Sales</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.totalOrders || 0 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-warning">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Total Revenue</h6>
+                    <h2 class="fw-bold mb-0">\${{ stats.totalRevenue || 0 | number:'1.2-2' }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-danger">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Pending Orders</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.pendingOrders || 0 }}</h2>
+                </div>
+            </div>
         </div>
     </div>
 
-    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
-        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-indigo-500">
-            <h3 class="text-gray-500 text-sm font-uppercase mb-1">Total Products</h3>
-            <p class="text-3xl font-bold">{{ stats.totalProducts || 0 }}</p>
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3 border-bottom">
+            <h5 class="mb-0 fw-bold">Recent Orders</h5>
         </div>
-        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-blue-500">
-            <h3 class="text-gray-500 text-sm font-uppercase mb-1">Total Orders</h3>
-            <p class="text-3xl font-bold">{{ stats.totalOrders || 0 }}</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-green-500">
-            <h3 class="text-gray-500 text-sm font-uppercase mb-1">Total Revenue</h3>
-            <p class="text-3xl font-bold">${{ stats.totalRevenue || 0 | number:'1.2-2' }}</p>
-        </div>
-        <div class="bg-white p-6 rounded-lg shadow-md border-l-4 border-yellow-500">
-            <h3 class="text-gray-500 text-sm font-uppercase mb-1">Pending Orders</h3>
-            <p class="text-3xl font-bold">{{ stats.pendingOrders || 0 }}</p>
-        </div>
-    </div>
-
-    <div class="bg-white rounded-lg shadow-md overflow-hidden">
-        <div class="px-6 py-4 border-b border-gray-200">
-            <h2 class="text-xl font-semibold">Recent Orders</h2>
-        </div>
-        <div class="overflow-x-auto">
-            <table class="min-w-full divide-y divide-gray-200">
-                <thead class="bg-gray-50">
-                    <tr>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Order
-                            ID</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Customer</th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Date
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Total
-                        </th>
-                        <th class="px-6 py-3 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">
-                            Status</th>
-                    </tr>
-                </thead>
-                <tbody class="bg-white divide-y divide-gray-200">
-                    <tr *ngFor="let order of recentOrders">
-                        <td class="px-6 py-4 whitespace-nowrap">#{{ order.id }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <div class="text-sm font-medium text-gray-900">{{ order.user?.fullName }}</div>
-                            <div class="text-sm text-gray-500">{{ order.user?.email }}</div>
-                        </td>
-                        <td class="px-6 py-4 whitespace-nowrap">{{ order.orderDate | date:'short' }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">${{ order.totalPrice }}</td>
-                        <td class="px-6 py-4 whitespace-nowrap">
-                            <span [ngClass]="{
-                'bg-green-100 text-green-800': order.orderStatus === 'Delivered',
-                'bg-yellow-100 text-yellow-800': order.orderStatus === 'Pending',
-                'bg-blue-100 text-blue-800': order.orderStatus === 'Shipped',
-                'bg-red-100 text-red-800': order.orderStatus === 'Cancelled'
-              }" class="px-2 inline-flex text-xs leading-5 font-semibold rounded-full">
-                                {{ order.orderStatus }}
-                            </span>
-                        </td>
-                    </tr>
-                    <tr *ngIf="recentOrders.length === 0">
-                        <td colspan="5" class="px-6 py-4 text-center text-gray-500">No orders found.</td>
-                    </tr>
-                </tbody>
-            </table>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-striped table-hover mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Order ID</th>
+                            <th>Date</th>
+                            <th>Total Price</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of recentOrders">
+                            <td class="ps-4 fw-bold">#{{ order.id }}</td>
+                            <td>{{ order.orderDate | date:'mediumDate' }}</td>
+                            <td class="fw-bold">\${{ order.totalPrice }}</td>
+                            <td>
+                                <span class="badge rounded-pill" [ngClass]="{
+                                    'bg-success': order.orderStatus === 'Delivered',
+                                    'bg-warning text-dark': order.orderStatus === 'Pending',
+                                    'bg-info text-dark': order.orderStatus === 'Shipped',
+                                    'bg-danger': order.orderStatus === 'Cancelled'
+                                }">{{ order.orderStatus }}</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="recentOrders.length === 0">
+                            <td colspan="4" class="text-center py-5 text-muted">No orders found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         </div>
     </div>
 </div>
