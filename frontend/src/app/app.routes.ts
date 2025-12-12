@@ -14,6 +14,8 @@ import { PrivacyComponent } from './components/pages/privacy/privacy.component';
 import { UserDashboardComponent } from './components/dashboards/user-dashboard/user-dashboard.component';
 import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { SellerDashboardComponent } from './components/dashboards/seller-dashboard/seller-dashboard.component';
+import { ProductManagementComponent } from './components/admin/product-management/product-management.component';
+import { ProductFormComponent } from './components/admin/product-form/product-form.component';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
 
@@ -55,6 +57,23 @@ export const routes: Routes = [
         component: UserListComponent,
         canActivate: [authGuard, roleGuard],
         data: { role: 'Admin' }
+    },
+
+    // Product Management
+    {
+        path: 'admin/products',
+        component: ProductManagementComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'admin/products/new',
+        component: ProductFormComponent,
+        canActivate: [authGuard]
+    },
+    {
+        path: 'admin/products/edit/:id',
+        component: ProductFormComponent,
+        canActivate: [authGuard]
     },
 
     { path: 'about', component: AboutComponent },
