@@ -73,7 +73,7 @@ namespace AngNetEcommerce.API.Controllers
         }
 
         [HttpGet("admin")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Seller")]
         public async Task<ActionResult<IEnumerable<Order>>> GetAllOrders()
         {
             return await _context.Orders
@@ -85,7 +85,7 @@ namespace AngNetEcommerce.API.Controllers
         }
 
         [HttpPut("{id}/status")]
-        [Authorize(Roles = "Admin")]
+        [Authorize(Roles = "Admin,Seller")]
         public async Task<IActionResult> UpdateOrderStatus(int id, [FromBody] string status)
         {
             var order = await _context.Orders.FindAsync(id);

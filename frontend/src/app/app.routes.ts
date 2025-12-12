@@ -12,6 +12,7 @@ import { ContactComponent } from './components/pages/contact/contact.component';
 import { TermsComponent } from './components/pages/terms/terms.component';
 import { PrivacyComponent } from './components/pages/privacy/privacy.component';
 import { UserDashboardComponent } from './components/dashboards/user-dashboard/user-dashboard.component';
+import { UserListComponent } from './components/admin/user-list/user-list.component';
 import { SellerDashboardComponent } from './components/dashboards/seller-dashboard/seller-dashboard.component';
 import { authGuard } from './guards/auth.guard';
 import { roleGuard } from './guards/role.guard';
@@ -48,6 +49,12 @@ export const routes: Routes = [
         path: 'admin',
         redirectTo: 'dashboard/admin',
         pathMatch: 'full'
+    },
+    {
+        path: 'admin/users',
+        component: UserListComponent,
+        canActivate: [authGuard, roleGuard],
+        data: { role: 'Admin' }
     },
 
     { path: 'about', component: AboutComponent },

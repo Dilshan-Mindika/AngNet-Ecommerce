@@ -40,6 +40,12 @@ import { AuthService } from '../../services/auth.service';
                 <span class="badge bg-danger rounded-pill ms-1" *ngIf="cartCount > 0">{{ cartCount }}</span>
               </a>
             </li>
+            <li class="nav-item" *ngIf="isAdmin">
+              <a class="nav-link fw-bold text-primary" routerLink="/dashboard/admin">Admin Dashboard</a>
+            </li>
+            <li class="nav-item" *ngIf="isSeller">
+              <a class="nav-link fw-bold text-primary" routerLink="/dashboard/seller">Seller Dashboard</a>
+            </li>
             <ng-container *ngIf="!isLoggedIn; else loggedIn">
               <li class="nav-item ms-3">
                 <a class="btn btn-outline-primary btn-sm" routerLink="/login">Sign in</a>
@@ -57,7 +63,7 @@ import { AuthService } from '../../services/auth.service';
                   <li><a class="dropdown-item" routerLink="/dashboard/admin" *ngIf="isAdmin">Admin Dashboard</a></li>
                   <li><a class="dropdown-item" routerLink="/dashboard/seller" *ngIf="isSeller">Seller Dashboard</a></li>
                   <li><a class="dropdown-item" routerLink="/dashboard/user" *ngIf="isUser">My Dashboard</a></li>
-                  <li><a class="dropdown-item" routerLink="/dashboard/user">My Orders</a></li>
+                  <li><a class="dropdown-item" routerLink="/dashboard/user" *ngIf="isUser">My Orders</a></li>
                   <li><hr class="dropdown-divider"></li>
                   <li><a class="dropdown-item" (click)="logout()" style="cursor: pointer">Sign out</a></li>
                 </ul>

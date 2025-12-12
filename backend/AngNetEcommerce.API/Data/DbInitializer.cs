@@ -43,6 +43,67 @@ namespace AngNetEcommerce.API.Data
                 context.Products.Add(p);
             }
             context.SaveChanges();
+
+            // Seed Orders if none exist
+            if (context.Orders.Any())
+            {
+                return;
+            }
+
+            var customer = context.Users.FirstOrDefault(u => u.Email == "john@example.com");
+            var iPhone = context.Products.FirstOrDefault(p => p.Name == "iPhone 15 Pro");
+            var macbook = context.Products.FirstOrDefault(p => p.Name == "MacBook Air M2");
+            var headphones = context.Products.FirstOrDefault(p => p.Name == "Sony WH-1000XM5");
+
+            if (customer != null && iPhone != null && macbook != null && headphones != null)
+            {
+                var orders = new Order[]
+                {
+                    new Order
+                    {
+                        UserId = customer.Id,
+                        OrderDate = DateTime.UtcNow.AddDays(-2),
+                        OrderStatus = "Delivered",
+                        ShippingAddress = "123 Main St, New York, NY",
+                        TotalPrice = iPhone.Price + headphones.Price,
+                        OrderItems = new List<OrderItem>
+                        {
+                            new OrderItem { ProductId = iPhone.Id, Quantity = 1, Price = iPhone.Price },
+                            new OrderItem { ProductId = headphones.Id, Quantity = 1, Price = headphones.Price }
+                        }
+                    },
+                    new Order
+                    {
+                        UserId = customer.Id,
+                        OrderDate = DateTime.UtcNow.AddDays(-1),
+                        OrderStatus = "Pending",
+                        ShippingAddress = "123 Main St, New York, NY",
+                        TotalPrice = macbook.Price,
+                        OrderItems = new List<OrderItem>
+                        {
+                            new OrderItem { ProductId = macbook.Id, Quantity = 1, Price = macbook.Price }
+                        }
+                    },
+                    new Order
+                    {
+                        UserId = customer.Id,
+                        OrderDate = DateTime.UtcNow.AddHours(-1),
+                        OrderStatus = "Shipped",
+                        ShippingAddress = "456 Side Ave, Boston, MA",
+                        TotalPrice = headphones.Price * 2,
+                        OrderItems = new List<OrderItem>
+                        {
+                            new OrderItem { ProductId = headphones.Id, Quantity = 2, Price = headphones.Price }
+                        }
+                    }
+                };
+
+                foreach (var o in orders)
+                {
+                    context.Orders.Add(o);
+                }
+                context.SaveChanges();
+            }
         }
     }
 }

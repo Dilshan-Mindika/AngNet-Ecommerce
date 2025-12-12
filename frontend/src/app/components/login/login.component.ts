@@ -44,7 +44,13 @@ export class LoginComponent {
     const credentials = { email: this.email, password: this.password };
     this.authService.login(credentials).subscribe({
       next: () => {
-        this.router.navigate(['/']);
+        if (this.authService.isAdmin()) {
+          this.router.navigate(['/dashboard/admin']);
+        } else if (this.authService.isSeller()) {
+          this.router.navigate(['/dashboard/seller']);
+        } else {
+          this.router.navigate(['/']);
+        }
       },
       error: (err) => {
         alert('Login failed');

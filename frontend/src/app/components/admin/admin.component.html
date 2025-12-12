@@ -1,1 +1,98 @@
-<p>admin works!</p>
+<div class="container py-5">
+    <div class="mb-4">
+        <h1 class="fw-bold mb-2">Admin Dashboard</h1>
+        <p class="text-muted">Complete system overview and management.</p>
+        <div class="d-flex gap-3 mt-3">
+            <a routerLink="/products" class="btn btn-outline-primary">Manage Products</a>
+            <a routerLink="/admin/users" class="btn btn-outline-primary">Manage Users</a>
+        </div>
+    </div>
+
+    <div class="row g-4 mb-4">
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-warning">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Total Users</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.totalUsers || 0 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-info">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Total Products</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.totalProducts || 0 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-primary">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Total Orders</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.totalOrders || 0 }}</h2>
+                </div>
+            </div>
+        </div>
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-success">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Total Revenue</h6>
+                    <h2 class="fw-bold mb-0">\${{ stats.totalRevenue || 0 | number:'1.2-2' }}</h2>
+                </div>
+            </div>
+        </div>
+        <!-- Pending Orders could be its own or combined -->
+        <div class="col-md-3">
+            <div class="card h-100 border-0 shadow-sm border-start border-4 border-danger">
+                <div class="card-body">
+                    <h6 class="text-muted text-uppercase mb-2">Pending Orders</h6>
+                    <h2 class="fw-bold mb-0">{{ stats.pendingOrders || 0 }}</h2>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="card border-0 shadow-sm">
+        <div class="card-header bg-white py-3">
+            <h5 class="mb-0 fw-bold">Recent Orders</h5>
+        </div>
+        <div class="card-body p-0">
+            <div class="table-responsive">
+                <table class="table table-hover mb-0 align-middle">
+                    <thead class="table-light">
+                        <tr>
+                            <th class="ps-4">Order ID</th>
+                            <th>Customer</th>
+                            <th>Date</th>
+                            <th>Total</th>
+                            <th>Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let order of recentOrders">
+                            <td class="ps-4">#{{ order.id }}</td>
+                            <td>
+                                <div class="fw-bold">{{ order.user?.fullName }}</div>
+                                <div class="small text-muted">{{ order.user?.email }}</div>
+                            </td>
+                            <td>{{ order.orderDate | date:'mediumDate' }} <br> <small class="text-muted">{{
+                                    order.orderDate | date:'shortTime' }}</small></td>
+                            <td class="fw-bold">\${{ order.totalPrice }}</td>
+                            <td>
+                                <span class="badge rounded-pill" [ngClass]="{
+                                    'bg-success': order.orderStatus === 'Delivered',
+                                    'bg-warning text-dark': order.orderStatus === 'Pending',
+                                    'bg-info text-dark': order.orderStatus === 'Shipped',
+                                    'bg-danger': order.orderStatus === 'Cancelled'
+                                }">{{ order.orderStatus }}</span>
+                            </td>
+                        </tr>
+                        <tr *ngIf="recentOrders.length === 0">
+                            <td colspan="5" class="text-center py-5 text-muted">No orders found.</td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>
